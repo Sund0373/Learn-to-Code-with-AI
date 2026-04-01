@@ -1,0 +1,23 @@
+# .claudeignore
+# Files skipped when Claude Code scans this project.
+# Stack: Unknown — universal patterns only.
+# Extend this file once the project's tech stack is defined.
+
+# ── Git internals ─────────────────────────────────────────────────────────────
+.git/
+
+# ── Environment & secrets ──────────────────────────────────────────────────────
+.env
+.env.*
+**/.env
+**/.env.*
+serviceAccount.json
+authServiceAccount.json
+
+# ── Logs ──────────────────────────────────────────────────────────────────────
+*.log
+**/logs/
+
+# ── OS noise ──────────────────────────────────────────────────────────────────
+**/.DS_Store
+Thumbs.db
