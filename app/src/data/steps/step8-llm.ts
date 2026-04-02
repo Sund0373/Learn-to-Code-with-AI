@@ -2,9 +2,9 @@ import { StepData } from "../types";
 
 export const step8Llm: StepData = {
   id: "llm-apis",
-  stepNumber: 8,
+  stepNumber: 9,
   title: "Connecting to LLM APIs",
-  subtitle: "Get API keys for Claude and OpenAI, and test AI-powered features.",
+  subtitle: "Get API keys for Claude and/or OpenAI and test AI-powered features.",
   estimatedMinutes: 15,
   sections: [
     {
@@ -13,18 +13,24 @@ export const step8Llm: StepData = {
         {
           type: "text",
           content:
-            "LLMs (Large Language Models) like Claude and ChatGPT are the AI models that power tools like Claude Code. You can integrate them directly into your own apps via their APIs. Instead of chatting with them in a browser, your code sends them a prompt and gets a response back — allowing you to build AI features into anything you build.",
+            "LLMs (Large Language Models) like Claude and ChatGPT are the AI models that power tools like Claude Code. You can integrate them directly into your own apps via their APIs. Instead of chatting with them in a browser, your code sends them a prompt and gets a response back — this is how you build AI features into anything.",
+        },
+        {
+          type: "text",
+          content:
+            "This template's `/api/ai` endpoint supports both Claude (Anthropic) and GPT (OpenAI). Just add the API key for whichever provider you want to use — or both. The endpoint auto-detects which is available.",
+        },
+        {
+          type: "callout",
+          variant: "info",
+          content:
+            "You only need ONE provider to proceed. Set up whichever you prefer — or both if you want to compare them.",
         },
       ],
     },
     {
       title: "Option A: Set Up Claude (Anthropic)",
       blocks: [
-        {
-          type: "text",
-          content:
-            "This template is pre-wired for Claude. Here's how to get your API key:",
-        },
         {
           type: "checklist",
           content: "",
@@ -59,11 +65,6 @@ export const step8Llm: StepData = {
       title: "Option B: Set Up OpenAI",
       blocks: [
         {
-          type: "text",
-          content:
-            "If you also want to experiment with OpenAI's models (GPT-4, etc.), here's how to get set up:",
-        },
-        {
           type: "checklist",
           content: "",
           items: [
@@ -76,20 +77,13 @@ export const step8Llm: StepData = {
         },
         {
           type: "text",
-          content:
-            "To use OpenAI in your app, you'd add this to `.env.local`:",
+          content: "Add it to your `.env.local` file:",
         },
         {
           type: "code",
           language: "env",
           label: ".env.local",
           content: "OPENAI_API_KEY=sk-...",
-        },
-        {
-          type: "callout",
-          variant: "info",
-          content:
-            "This template's built-in AI route uses Claude, but your AI coding agent can help you add OpenAI support too. Just ask it to create a new API route that uses the OpenAI SDK.",
         },
       ],
     },
@@ -99,48 +93,83 @@ export const step8Llm: StepData = {
         {
           type: "text",
           content:
-            "With your Anthropic API key set and dev server restarted, you can test the built-in AI endpoint. Ask your AI coding agent:",
-        },
-        {
-          type: "code",
-          language: "text",
-          label: "Prompt for your AI agent",
-          content: `Create a simple test page at app/src/app/ai-test/page.tsx that:
-- Has a text input and a "Send" button
-- When clicked, sends the input to /api/ai via POST
-- Displays the AI response below the input
-- Keep it simple, no streaming needed for now`,
-        },
-        {
-          type: "text",
-          content:
-            "Once created, visit `http://localhost:3000/ai-test`, type a question, and click Send. You should see Claude's response appear!",
-        },
-      ],
-    },
-    {
-      title: "Understanding the AI Route",
-      blocks: [
-        {
-          type: "text",
-          content:
-            "The AI endpoint at `app/src/app/api/ai/route.ts` does a few things:",
+            "After adding your key(s) to `.env.local`:",
         },
         {
           type: "checklist",
           content: "",
           items: [
-            "Receives a message from the frontend",
-            "Sends it to Claude with a system prompt (instructions that shape how Claude responds)",
-            "Can return the full response at once, or stream it word-by-word (for a ChatGPT-like typing effect)",
-            "The system prompt in the file is a placeholder — you'd customize it for your specific use case",
+            "Close your terminal completely (not just Ctrl+C — close the tab/window)",
+            "Open a fresh terminal and run `npm run dev`",
+            "In your browser, do a hard refresh: Ctrl+Shift+R (Windows) or Cmd+Shift+R (Mac)",
+            "You should see the \"AI Assistant\" button appear in the top-right of the header",
           ],
+        },
+        {
+          type: "callout",
+          variant: "warning",
+          content:
+            "Environment variable changes require a full server restart. Ctrl+C alone sometimes doesn't fully kill the Node process on Windows — close the terminal entirely to be safe. The hard browser refresh ensures the page re-fetches the AI status.",
+        },
+        {
+          type: "text",
+          content:
+            "You can also ask your AI coding agent to build a test page:",
+        },
+        {
+          type: "code",
+          language: "text",
+          label: "Tell your AI agent",
+          content: `Create a simple test page at app/src/app/ai-test/page.tsx that:
+- Has a text input and a "Send" button
+- When clicked, sends the input to /api/ai via POST
+- Displays the AI response below the input
+- Also show which provider was used (it's in the response JSON)
+- Keep it simple, no streaming needed for now`,
+        },
+        {
+          type: "text",
+          content: "Once created, open it in a new tab:",
+        },
+        {
+          type: "link",
+          content: "/ai-test",
+          label: "Open AI Test Page",
+        },
+        {
+          type: "text",
+          content:
+            "Type a question and click Send. You should see a response from Claude or GPT, along with which provider handled it.",
+        },
+      ],
+    },
+    {
+      title: "How the Endpoint Works",
+      blocks: [
+        {
+          type: "text",
+          content:
+            "The `/api/ai` route at `app/src/app/api/ai/route.ts` automatically picks the right provider:",
+        },
+        {
+          type: "checklist",
+          content: "",
+          items: [
+            "If only `ANTHROPIC_API_KEY` is set → uses Claude",
+            "If only `OPENAI_API_KEY` is set → uses OpenAI",
+            "If both are set → defaults to Claude, but you can pass `{ provider: \"openai\" }` in the request body to override",
+            "Supports streaming for both providers (pass `{ stream: true }` for a ChatGPT-like typing effect)",
+          ],
+        },
+        {
+          type: "text",
+          content: "Both providers use the same system prompt defined at the top of the route file. The system prompt is the most important part of AI integration — it tells the model what role to play and how to respond.",
         },
         {
           type: "callout",
           variant: "tip",
           content:
-            "The system prompt is the most important part of AI integration. It tells the model what role to play, what rules to follow, and how to format responses. Ask your AI agent to help you write a good system prompt for your specific use case.",
+            "Want to customize the AI's behavior? Tell your agent: \"Update the SYSTEM_PROMPT in api/ai/route.ts to act as a [describe the role you want].\" The system prompt shapes everything about how the AI responds.",
         },
       ],
     },
@@ -150,31 +179,31 @@ export const step8Llm: StepData = {
         {
           type: "text",
           content:
-            "While you have your OpenAI account, check out the Playground — it's a great way to experiment with different models and prompts without writing code:",
+            "If you set up OpenAI, the Playground is a great way to experiment with prompts without writing code:",
         },
         {
           type: "checklist",
           content: "",
           items: [
             "Go to platform.openai.com/playground",
-            "Select a model (start with GPT-4o-mini for cheaper experimentation)",
-            "Type a prompt in the System section (e.g., \"You are a helpful coding tutor\")",
+            "Select a model (gpt-4o-mini is cheapest for testing)",
+            "Type a system prompt (e.g., \"You are a helpful coding tutor\")",
             "Type a user message and click \"Submit\"",
-            "Experiment with different system prompts and see how the responses change",
+            "Experiment with different system prompts and see how responses change",
           ],
         },
         {
           type: "callout",
           variant: "info",
           content:
-            "The Playground uses the same API your code would use — it's just a visual interface for testing. Once you find prompts that work well, you can copy them into your app's system prompt.",
+            "The Playground uses the same API your code uses — it's just a visual interface for testing. Once you find prompts that work well, you can copy them into your app's SYSTEM_PROMPT.",
         },
         {
           type: "code",
           language: "text",
           label: "Tell your AI agent",
           content:
-            "My ANTHROPIC_API_KEY is configured in app/.env.local and working. The AI endpoint at /api/ai is functional. The current system prompt in api/ai/route.ts is a placeholder — help me customize it for [describe your use case]. I also have an OpenAI key if we want to add GPT support.",
+            "My AI API key(s) are configured in app/.env.local and working. The /api/ai endpoint supports both Claude and OpenAI with auto-detection. The SYSTEM_PROMPT in api/ai/route.ts is still the default placeholder — help me customize it for [describe your use case].",
         },
       ],
     },

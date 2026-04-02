@@ -2,27 +2,19 @@
  * Typed API fetch client.
  *
  * Wraps fetch with:
- *   - Automatic Authorization header injection (reads from sessionStorage)
  *   - { data, error } return shape — no try/catch needed in components
  *   - Typed responses via generics
+ *   - Auth is handled via httpOnly cookies (automatically sent by the browser)
  *
  * @example
- * const { data, error } = await api.get<User[]>("/api/users");
- * const { data, error } = await api.post<{ id: string }>("/api/users", { name: "Alice" });
- * const { data, error } = await api.patch("/api/users?id=123", { name: "Bob" });
- * const { data, error } = await api.delete("/api/users?id=123");
+ * const { data, error } = await api.get<Product[]>("/api/products");
+ * const { data, error } = await api.post<{ id: string }>("/api/products", { name: "Widget" });
  */
 
 export interface ApiResponse<T> {
   data: T | null;
   error: string | null;
   status: number;
-}
-
-function getAuthHeader(): Record<string, string> {
-  if (typeof window === "undefined") return {};
-  const token = sessionStorage.getItem("sessionToken");
-  return token ? { Authorization: `Bearer ${token}` } : {};
 }
 
 async function request<T>(
@@ -33,7 +25,6 @@ async function request<T>(
     ...options,
     headers: {
       "Content-Type": "application/json",
-      ...getAuthHeader(),
       ...options.headers,
     },
   });

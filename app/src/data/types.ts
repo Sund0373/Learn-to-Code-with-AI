@@ -4,7 +4,9 @@ export type ContentBlockType =
   | "terminal"
   | "file-tree"
   | "callout"
-  | "checklist";
+  | "checklist"
+  | "link"
+  | "component";
 
 export interface ContentBlock {
   type: ContentBlockType;

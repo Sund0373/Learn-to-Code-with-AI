@@ -2,7 +2,7 @@ import { StepData } from "../types";
 
 export const step9Agents: StepData = {
   id: "building-agents",
-  stepNumber: 9,
+  stepNumber: 10,
   title: "Building Agents",
   subtitle: "Understand what AI agents are and how to build them into your app.",
   estimatedMinutes: 15,
@@ -133,7 +133,7 @@ export const step9Agents: StepData = {
         {
           type: "text",
           content:
-            "If you've worked through all 9 steps, you now understand:",
+            "If you've worked through all 10 steps, you now understand:",
         },
         {
           type: "checklist",
