@@ -19,8 +19,23 @@ import {
 
 type Params = { collection: string };
 
+/** Collections accessible via this generic CRUD route. */
+const ALLOWED_COLLECTIONS = new Set([
+  "products",
+]);
+
 function err(message: string, status: number) {
   return NextResponse.json({ error: message }, { status });
+}
+
+function validateCollection(collection: string) {
+  if (!ALLOWED_COLLECTIONS.has(collection)) {
+    return err(
+      `Collection "${collection}" is not allowed. Allowed: ${[...ALLOWED_COLLECTIONS].join(", ")}`,
+      403
+    );
+  }
+  return null;
 }
 
 // ─── GET ───────────────────────────────────────────────────────────────────────
@@ -31,6 +46,9 @@ export async function GET(
 ) {
   try {
     const { collection } = await params;
+    const blocked = validateCollection(collection);
+    if (blocked) return blocked;
+
     const id = req.nextUrl.searchParams.get("id");
 
     if (id) {
@@ -54,6 +72,9 @@ export async function POST(
 ) {
   try {
     const { collection } = await params;
+    const blocked = validateCollection(collection);
+    if (blocked) return blocked;
+
     const body = await req.json();
     const id = await createDoc(collection, body);
     return NextResponse.json({ id }, { status: 201 });
@@ -70,6 +91,9 @@ export async function PATCH(
 ) {
   try {
     const { collection } = await params;
+    const blocked = validateCollection(collection);
+    if (blocked) return blocked;
+
     const id = req.nextUrl.searchParams.get("id");
     if (!id) return err("Missing ?id param", 400);
 
@@ -89,6 +113,9 @@ export async function DELETE(
 ) {
   try {
     const { collection } = await params;
+    const blocked = validateCollection(collection);
+    if (blocked) return blocked;
+
     const id = req.nextUrl.searchParams.get("id");
     if (!id) return err("Missing ?id param", 400);
 

@@ -54,12 +54,12 @@ export const step5Auth: StepData = {
         {
           type: "text",
           content:
-            "Make sure your dev server is running (`npm run dev`), then navigate to the signup page:",
+            "Make sure your dev server is running (`npm run dev`), then click below to go to the signup page:",
         },
         {
-          type: "terminal",
-          content: "http://localhost:3000/auth/signup",
-          label: "Open in your browser",
+          type: "link",
+          content: "/auth?mode=signup",
+          label: "Open Signup Page",
         },
         {
           type: "checklist",
@@ -90,12 +90,12 @@ export const step5Auth: StepData = {
         {
           type: "text",
           content:
-            "Click \"Log out\" in the top-right corner of the header. Then go to the login page and sign in with the same credentials:",
+            "Click \"Log out\" in the top-right corner of the header. Then click below to go to the login page and sign in with the same credentials:",
         },
         {
-          type: "terminal",
-          content: "http://localhost:3000/auth/login",
-          label: "Open in your browser",
+          type: "link",
+          content: "/auth",
+          label: "Open Login Page",
         },
         {
           type: "text",
@@ -112,9 +112,9 @@ export const step5Auth: StepData = {
           content: "Log out again, then try to visit the dashboard directly:",
         },
         {
-          type: "terminal",
-          content: "http://localhost:3000/dashboard",
-          label: "Try this while logged out",
+          type: "link",
+          content: "/dashboard",
+          label: "Try opening the Dashboard (while logged out)",
         },
         {
           type: "text",
@@ -142,7 +142,7 @@ export const step5Auth: StepData = {
           items: [
             "You enter email + password on the login page",
             "The browser sends those to Firebase, which verifies them and returns an ID token",
-            "Your app sends that ID token to your backend API (`/api/auth/login`)",
+            "Your app sends that ID token to your backend API (`/api/auth`)",
             "The backend verifies the token with Firebase Admin, then creates a JWT (a signed session token)",
             "The JWT is stored in a secure cookie (httpOnly — JavaScript can't read it, which prevents theft)",
             "On every page load, the middleware reads that cookie and checks if the JWT is valid",

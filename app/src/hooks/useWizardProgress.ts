@@ -10,9 +10,6 @@ interface WizardProgress {
 }
 
 function loadProgress(): WizardProgress {
-  if (typeof window === "undefined") {
-    return { completedSteps: [], lastStepIndex: 0 };
-  }
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (raw) {
@@ -29,22 +26,28 @@ function loadProgress(): WizardProgress {
 }
 
 export function useWizardProgress() {
-  const [completedSteps, setCompletedSteps] = useState<Set<string>>(() => {
-    const p = loadProgress();
-    return new Set(p.completedSteps);
-  });
+  // Start with defaults to match server render — avoids hydration mismatch
+  const [completedSteps, setCompletedSteps] = useState<Set<string>>(new Set());
+  const [lastStepIndex, setLastStepIndex] = useState(0);
+  const [hydrated, setHydrated] = useState(false);
 
-  const [lastStepIndex, setLastStepIndex] = useState<number>(() => {
-    return loadProgress().lastStepIndex;
-  });
-
+  // Load from localStorage after mount
   useEffect(() => {
+    const saved = loadProgress();
+    setCompletedSteps(new Set(saved.completedSteps));
+    setLastStepIndex(saved.lastStepIndex);
+    setHydrated(true);
+  }, []);
+
+  // Persist to localStorage on changes (skip the initial default state)
+  useEffect(() => {
+    if (!hydrated) return;
     const data: WizardProgress = {
       completedSteps: Array.from(completedSteps),
       lastStepIndex,
     };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-  }, [completedSteps, lastStepIndex]);
+  }, [completedSteps, lastStepIndex, hydrated]);
 
   const markComplete = useCallback((stepId: string) => {
     setCompletedSteps((prev) => {

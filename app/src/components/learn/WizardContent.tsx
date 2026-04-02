@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { useWizard } from "@/context/WizardContext";
 import { steps } from "@/data/steps";
 import StepRenderer from "./StepRenderer";
 import Button from "@/components/ui/Button";
+import Confetti from "./Confetti";
 
 export default function WizardContent() {
   const {
@@ -19,14 +20,28 @@ export default function WizardContent() {
   const contentRef = useRef<HTMLDivElement>(null);
   const step = steps[currentStepIndex];
   const complete = isStepComplete(step.id);
+  const [showConfetti, setShowConfetti] = useState(false);
 
   useEffect(() => {
     contentRef.current?.scrollTo({ top: 0 });
     window.scrollTo({ top: 0 });
   }, [currentStepIndex]);
 
+  const handleComplete = () => {
+    if (!complete) {
+      setShowConfetti(true);
+    }
+    toggleComplete(step.id);
+  };
+
+  const handleConfettiDone = useCallback(() => {
+    setShowConfetti(false);
+  }, []);
+
   return (
     <div ref={contentRef} className="flex-1 overflow-y-auto">
+      {showConfetti && <Confetti onDone={handleConfettiDone} />}
+
       <div className="mx-auto max-w-3xl px-4 py-6 sm:px-6 lg:px-8">
         {/* Step header */}
         <div className="mb-8">
@@ -49,13 +64,13 @@ export default function WizardContent() {
         <StepRenderer sections={step.sections} />
 
         {/* Bottom actions */}
-        <div className="mt-12 flex flex-col gap-4 border-t border-gray-200 pt-6 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-12 mb-16 flex flex-col gap-4 border-t border-gray-200 pt-6 sm:flex-row sm:items-center sm:justify-between">
           <button
-            onClick={() => toggleComplete(step.id)}
-            className={`inline-flex items-center gap-2 rounded-lg border px-4 py-2 text-sm font-medium transition-colors ${
+            onClick={handleComplete}
+            className={`inline-flex items-center gap-2 rounded-lg border px-4 py-2 text-sm font-medium transition-all ${
               complete
                 ? "border-green-200 bg-green-50 text-green-700 hover:bg-green-100"
-                : "border-gray-200 bg-white text-gray-600 hover:bg-gray-50"
+                : "border-gray-200 bg-white text-gray-600 hover:bg-gray-50 hover:scale-105 active:scale-95"
             }`}
           >
             {complete ? (

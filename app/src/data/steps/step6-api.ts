@@ -24,8 +24,8 @@ export const step6Api: StepData = {
           type: "checklist",
           content: "",
           items: [
-            "`app/api/auth/login/route.ts` → handles `POST /api/auth/login`",
-            "`app/api/auth/signup/route.ts` → handles `POST /api/auth/signup`",
+            "`POST /api/auth/login` — verifies credentials and creates a session",
+            "`POST /api/auth/signup` — creates a new account and session",
             "`app/api/ai/route.ts` → handles `POST /api/ai`",
             "`app/api/[collection]/route.ts` → handles any collection (dynamic route)",
           ],

@@ -1,5 +1,5 @@
 {
-  "name": "project-name",
+  "name": "learn-to-code-with-ai",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -14,6 +14,7 @@
     "firebase-admin": "^13.7.0",
     "jose": "^5.0.0",
     "next": "^15.0.0",
+    "openai": "^6.33.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-markdown": "^10.1.0"

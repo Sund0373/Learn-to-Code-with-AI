@@ -5,6 +5,7 @@ import { step3Env } from "./step3-env";
 import { step4Firebase } from "./step4-firebase";
 import { step5Auth } from "./step5-auth";
 import { step6Api } from "./step6-api";
+import { step7Products } from "./step7-products";
 import { step7Scraping } from "./step7-scraping";
 import { step8Llm } from "./step8-llm";
 import { step9Agents } from "./step9-agents";
@@ -16,6 +17,7 @@ export const steps: StepData[] = [
   step4Firebase,
   step5Auth,
   step6Api,
+  step7Products,
   step7Scraping,
   step8Llm,
   step9Agents,

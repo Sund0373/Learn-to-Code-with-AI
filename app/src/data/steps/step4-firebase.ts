@@ -57,16 +57,16 @@ export const step4Firebase: StepData = {
           items: [
             "In your Firebase project, click \"Build\" in the left sidebar, then \"Firestore Database\"",
             "Click \"Create database\"",
-            "Choose \"Start in test mode\" (this lets anyone read/write — fine for learning, you'd lock it down for production)",
+            "Choose \"Start in production mode\" — this locks the database down by default, which is the right habit to build from day one",
             "Select a location closest to you (e.g., us-central1 for US)",
             "Click \"Enable\"",
           ],
         },
         {
           type: "callout",
-          variant: "warning",
+          variant: "info",
           content:
-            "\"Test mode\" means your database is open to anyone for 30 days. This is fine for learning locally, but never leave it like this for a real app. Firebase will remind you to set up proper security rules.",
+            "Production mode means the database rejects all direct browser reads/writes by default. That's exactly what we want — our app talks to the database through server-side API routes using the service account (admin access), so the security rules don't affect us. This is the secure pattern for real projects.",
         },
       ],
     },
@@ -143,13 +143,13 @@ NEXT_PUBLIC_FIREBASE_APP_ID=1:123456789:web:abc123`,
         {
           type: "text",
           content:
-            "Your server (the backend API routes) needs special admin access to Firebase. This comes from a \"service account\" — a credentials file that gives your server full access to your database.",
+            "Your server (the backend API routes) needs admin access to Firebase. This comes from a \"service account\" — a credentials file that gives your server permission to read/write data and verify user logins.",
         },
         {
           type: "checklist",
           content: "",
           items: [
-            "Go to Project Settings > Service accounts tab",
+            "Go to Project Settings (gear icon) > \"Service accounts\" tab",
             "Make sure \"Firebase Admin SDK\" is selected and language is \"Node.js\"",
             "Click \"Generate new private key\"",
             "Click \"Generate key\" in the confirmation dialog",
@@ -178,30 +178,39 @@ NEXT_PUBLIC_FIREBASE_APP_ID=1:123456789:web:abc123`,
       ],
     },
     {
-      title: "Step 6: Verify Your Connection",
+      title: "Step 6: Seed Your Database",
       blocks: [
         {
           type: "text",
           content:
-            "Restart your dev server (`Ctrl+C` then `npm run dev`). Your app can now talk to Firebase! You won't see a visible difference on the homepage yet, but the connection is ready.",
+            "Restart your dev server (`Ctrl+C` then `npm run dev`). Let's verify everything works by loading some sample data into your database. This project includes a CSV file with 200 sample products — drag it into the box below or click to load it automatically.",
         },
         {
           type: "text",
           content:
-            "In the next step, we'll enable Authentication so you can actually test the signup and login flows — which will create real documents in your Firestore database.",
+            "The CSV file is at `app/public/sample-products.csv` if you want to look at it first. It has product names, categories, prices, stock levels, and descriptions.",
+        },
+        {
+          type: "component",
+          content: "SeedDatabase",
+        },
+        {
+          type: "text",
+          content:
+            "Once seeded, go to your Firebase Console > Firestore Database. You should see a `products` collection with 200 documents. This is the data we'll query through the API in a later step.",
         },
         {
           type: "callout",
           variant: "success",
           content:
-            "You now have a database! In the Firebase Console, you can click on \"Firestore Database\" in the sidebar to see your data as it gets created.",
+            "Your database is live and loaded with data! You can browse, search, and filter these products in the Firebase Console.",
         },
         {
           type: "code",
           language: "text",
           label: "Tell your AI agent",
           content:
-            "I've set up Firebase. My NEXT_PUBLIC_FIREBASE_* environment variables are configured in app/.env.local, and my service-account.json is in the project root (Base_Template/). The Firestore database is created and ready. You can now use the Firebase Admin SDK and Firestore CRUD helpers.",
+            "I've set up Firebase. My NEXT_PUBLIC_FIREBASE_* environment variables are configured in app/.env.local, my service-account.json is in the project root (Base_Template/), and the Firestore database is created in production mode with 200 sample products in a \"products\" collection. Firebase is fully ready.",
         },
       ],
     },

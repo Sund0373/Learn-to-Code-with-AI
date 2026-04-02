@@ -1,40 +1,29 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { isFirebaseConfigured, getClientAuth } from "@/lib/firebase/client";
 import { checkAuthState, type AuthStatus } from "@/lib/auth/authService";
 
-interface DecodedUser {
+interface AuthUser {
   uid: string;
-  email: string;
-  [key: string]: unknown;
+  email: string | null;
 }
 
 interface UseAuthReturn {
-  user: DecodedUser | null;
+  user: AuthUser | null;
   authStatus: AuthStatus;
   isLoading: boolean;
   isAuthenticated: boolean;
 }
 
-/** Decode a JWT payload without verifying signature (client-side only). */
-function decodeJwt(token: string): Record<string, unknown> | null {
-  try {
-    const payload = token.split(".")[1];
-    return JSON.parse(atob(payload));
-  } catch {
-    return null;
-  }
-}
-
 /**
  * Hook to access the current authenticated user.
- *
- * @example
- * const { user, isAuthenticated, isLoading } = useAuth();
- * if (!isAuthenticated) router.push("/auth/login");
+ * Cookie is the source of truth (server-side via middleware).
+ * This hook provides client-side display info only.
+ * Fully inert when Firebase is not configured.
  */
 export function useAuth(): UseAuthReturn {
-  const [user, setUser]           = useState<DecodedUser | null>(null);
+  const [user, setUser] = useState<AuthUser | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [authStatus, setAuthStatus] = useState<AuthStatus>({ state: "anonymous" });
 
@@ -42,13 +31,28 @@ export function useAuth(): UseAuthReturn {
     const status = checkAuthState();
     setAuthStatus(status);
 
-    if (status.state === "authenticated" && status.token) {
-      const decoded = decodeJwt(status.token);
-      if (decoded?.uid && decoded?.email) {
-        setUser(decoded as DecodedUser);
+    if (isFirebaseConfigured()) {
+      const auth = getClientAuth();
+      if (auth) {
+        import("firebase/auth").then(({ onAuthStateChanged }) => {
+          onAuthStateChanged(auth, (firebaseUser) => {
+            if (firebaseUser && status.state === "authenticated") {
+              setUser({ uid: firebaseUser.uid, email: firebaseUser.email });
+            } else if (status.state === "authenticated" && status.userId) {
+              setUser({ uid: status.userId, email: null });
+            }
+            setIsLoading(false);
+          });
+        }).catch(() => {
+          setIsLoading(false);
+        });
+        return;
       }
     }
 
+    if (status.state === "authenticated" && status.userId) {
+      setUser({ uid: status.userId, email: null });
+    }
     setIsLoading(false);
   }, []);
 

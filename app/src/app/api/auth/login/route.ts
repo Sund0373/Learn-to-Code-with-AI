@@ -1,11 +1,8 @@
 /**
  * POST /api/auth/login
  *
- * Accepts { email, password }, validates credentials, and returns a signed JWT
- * in an httpOnly cookie.
- *
- * Replace the placeholder credential check with your actual auth logic
- * (e.g. Firebase Auth, database lookup, bcrypt compare, etc.)
+ * Accepts { idToken } (Firebase ID token from client-side sign-in),
+ * verifies it server-side, and sets a signed JWT in an httpOnly cookie.
  */
 
 import { NextRequest, NextResponse } from "next/server";
@@ -33,7 +30,7 @@ export async function POST(req: NextRequest) {
 
     const token = await generateToken({ uid, email });
 
-    const response = NextResponse.json({ success: true, token, userId: uid });
+    const response = NextResponse.json({ success: true, userId: uid });
     response.cookies.set("Authorization", token, {
       httpOnly: true,
       secure:   process.env.NODE_ENV === "production",

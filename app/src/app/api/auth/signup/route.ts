@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getAdminAuth } from "@/lib/firebase/admin";
-import { setDoc } from "@/lib/firebase/crud";
+import { setDoc, getDoc } from "@/lib/firebase/crud";
 import { generateToken } from "@/lib/auth/tokenGenerator";
 
 export async function POST(req: NextRequest) {
@@ -22,16 +22,24 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Invalid token" }, { status: 401 });
     }
 
-    // Create the user document in Firestore
+    // Only create the user document if it doesn't already exist
+    const existingUser = await getDoc("users", uid);
+    if (existingUser) {
+      return NextResponse.json(
+        { error: "Account already exists. Please sign in instead." },
+        { status: 409 }
+      );
+    }
+
     await setDoc("users", uid, {
       email,
       setupComplete: false,
-      createdAt: new Date().toISOString(),
+      createdAt: new Date(),
     });
 
     const token = await generateToken({ uid, email });
 
-    const response = NextResponse.json({ success: true, token, userId: uid });
+    const response = NextResponse.json({ success: true, userId: uid });
     response.cookies.set("Authorization", token, {
       httpOnly: true,
       secure:   process.env.NODE_ENV === "production",

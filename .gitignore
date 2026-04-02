@@ -8,6 +8,7 @@ service-account.json
 app/.next/
 app/out/
 app/node_modules/
+app/tsconfig.tsbuildinfo
 
 # ─── Python ──────────────────────────────────────────────────────────────────
 __pycache__/
