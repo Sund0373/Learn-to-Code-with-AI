@@ -71,12 +71,16 @@ export const step8Llm: StepData = {
       title: "Option B: Set Up OpenAI",
       blocks: [
         {
+          type: "link",
+          content: "https://platform.openai.com",
+          label: "Open OpenAI Platform",
+        },
+        {
           type: "checklist",
           content: "",
           items: [
-            "Go to platform.openai.com",
             "Create an account or sign in",
-            "Click your profile icon > \"API keys\" (or go to platform.openai.com/api-keys)",
+            "Click your profile icon > \"API keys\"",
             "Click \"Create new secret key\"",
             "Give it a name and copy the key",
           ],
@@ -188,10 +192,14 @@ export const step8Llm: StepData = {
             "If you set up OpenAI, the Playground is a great way to experiment with prompts without writing code:",
         },
         {
+          type: "link",
+          content: "https://platform.openai.com/playground",
+          label: "Open OpenAI Playground",
+        },
+        {
           type: "checklist",
           content: "",
           items: [
-            "Go to platform.openai.com/playground",
             "Select a model (gpt-4o-mini is cheapest for testing)",
             "Type a system prompt (e.g., \"You are a helpful coding tutor\")",
             "Type a user message and click \"Submit\"",
