@@ -44,7 +44,7 @@ export default function TerminalBlock({ command, label }: TerminalBlockProps) {
       </div>
       <div className="p-4">
         {lines.map((line, i) => (
-          <div key={i} className="font-mono text-sm leading-relaxed">
+          <div key={i} className="font-mono text-sm leading-relaxed break-words">
             <span className="text-green-400 select-none">$ </span>
             <span className="text-gray-100">{line.replace(/^\$\s*/, "")}</span>
           </div>

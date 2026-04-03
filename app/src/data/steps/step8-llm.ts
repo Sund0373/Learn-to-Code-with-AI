@@ -32,6 +32,12 @@ export const step8Llm: StepData = {
       title: "Option A: Set Up Claude (Anthropic)",
       blocks: [
         {
+          type: "callout",
+          variant: "tip",
+          content:
+            "You'll need to run a terminal command after adding your key. Open a new terminal in VS Code (click the + button in the terminal panel) — keep your dev server running in the other one.",
+        },
+        {
           type: "checklist",
           content: "",
           items: [

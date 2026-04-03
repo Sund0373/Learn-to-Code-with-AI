@@ -24,6 +24,27 @@ export const step3Env: StepData = {
       ],
     },
     {
+      title: "What Is .gitignore?",
+      blocks: [
+        {
+          type: "text",
+          content:
+            "Before we create any secret files, you need to understand `.gitignore`. This is a special file in your project that tells Git which files to completely ignore — Git won't track them, commit them, or push them to GitHub.",
+        },
+        {
+          type: "text",
+          content:
+            "Your project already has a `.gitignore` that includes `.env.local` and `service-account.json`. That means even if you run `git add .`, these files will be skipped. This is how you keep secrets out of GitHub.",
+        },
+        {
+          type: "callout",
+          variant: "tip",
+          content:
+            "If a file shows up in grey in VS Code's file explorer, that usually means it's being ignored by Git. You can also run `git status` at any time — ignored files won't appear in the list.",
+        },
+      ],
+    },
+    {
       title: "Create Your .env.local File",
       blocks: [
         {
@@ -79,7 +100,7 @@ NEXT_PUBLIC_APP_URL=http://localhost:3000`,
         },
         {
           type: "terminal",
-          content: "openssl rand -base64 32",
+          content: "node -e \"console.log(require('crypto').randomBytes(32).toString('base64'))\"",
           label: "Generate a random secret",
         },
         {
@@ -92,12 +113,6 @@ NEXT_PUBLIC_APP_URL=http://localhost:3000`,
           language: "env",
           label: ".env.local",
           content: "JWT_SECRET=your-generated-string-goes-here",
-        },
-        {
-          type: "callout",
-          variant: "tip",
-          content:
-            "If `openssl` isn't available on your machine, you can also use: node -e \"console.log(require('crypto').randomBytes(32).toString('base64'))\"",
         },
       ],
     },

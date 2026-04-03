@@ -78,7 +78,17 @@ export const step6Api: StepData = {
           type: "callout",
           variant: "tip",
           content:
-            "You can test these right now! If Firebase is set up from Step 4, try opening your browser to http://localhost:3000/api/products — you should get an empty array back (since there's no data yet).",
+            "You can test these right now! The first link shows the products page that your users would see. The second link shows the raw API response — this is what the frontend reads behind the scenes to build that page.",
+        },
+        {
+          type: "link",
+          content: "/products",
+          label: "Products page (what users see)",
+        },
+        {
+          type: "link",
+          content: "http://localhost:3000/api/products",
+          label: "Raw API response (what the code sees)",
         },
       ],
     },
@@ -104,9 +114,9 @@ export const step6Api: StepData = {
           content: "Once your agent creates the file, test it by visiting:",
         },
         {
-          type: "terminal",
+          type: "link",
           content: "http://localhost:3000/api/hello",
-          label: "Open in your browser",
+          label: "Open /api/hello",
         },
         {
           type: "text",

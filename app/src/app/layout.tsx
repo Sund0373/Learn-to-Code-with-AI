@@ -14,6 +14,22 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        {process.env.NODE_ENV === "development" && (
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+(function() {
+  var es = new EventSource('/_next/webpack-hmr');
+  var disconnected = false;
+  es.onerror = function() { disconnected = true; };
+  es.onopen = function() { if (disconnected) window.location.reload(); };
+})();
+`,
+            }}
+          />
+        )}
+      </head>
       <body>
         <Header />
 
