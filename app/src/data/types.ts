@@ -6,7 +6,8 @@ export type ContentBlockType =
   | "callout"
   | "checklist"
   | "link"
-  | "component";
+  | "component"
+  | "image";
 
 export interface ContentBlock {
   type: ContentBlockType;

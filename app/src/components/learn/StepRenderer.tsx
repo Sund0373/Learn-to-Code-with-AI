@@ -3,9 +3,11 @@ import CodeBlock from "./CodeBlock";
 import TerminalBlock from "./TerminalBlock";
 import InfoCallout from "./InfoCallout";
 import SeedDatabase from "./SeedDatabase";
+import HelloWorldDemo from "./HelloWorldDemo";
 
 const componentMap: Record<string, React.ComponentType> = {
   SeedDatabase,
+  HelloWorldDemo,
 };
 
 function renderBlock(block: ContentBlock, index: number) {
@@ -91,6 +93,20 @@ function renderBlock(block: ContentBlock, index: number) {
       if (!Component) return null;
       return <Component key={index} />;
     }
+
+    case "image":
+      return (
+        <div key={index} className="my-4">
+          {block.label && (
+            <p className="mb-2 text-xs font-medium text-gray-500">{block.label}</p>
+          )}
+          <img
+            src={block.content}
+            alt={block.label || ""}
+            className="rounded-lg border border-gray-200"
+          />
+        </div>
+      );
 
     case "checklist":
       return (
