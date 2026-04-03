@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
+import { useRouter } from "next/navigation";
 import { useWizard } from "@/context/WizardContext";
 import { steps } from "@/data/steps";
 import StepRenderer from "./StepRenderer";
@@ -17,6 +18,7 @@ export default function WizardContent() {
     toggleComplete,
   } = useWizard();
 
+  const router = useRouter();
   const contentRef = useRef<HTMLDivElement>(null);
   const step = steps[currentStepIndex];
   const complete = isStepComplete(step.id);
@@ -29,10 +31,19 @@ export default function WizardContent() {
 
   const handleComplete = () => {
     if (!complete) {
+      const scrollY = contentRef.current?.scrollTop ?? 0;
+      const windowY = window.scrollY;
       setShowConfetti(true);
       toggleComplete(step.id);
+      // Restore scroll position after re-render
+      requestAnimationFrame(() => {
+        contentRef.current?.scrollTo({ top: scrollY });
+        window.scrollTo({ top: windowY });
+      });
     } else if (currentStepIndex < totalSteps - 1) {
       goToNext();
+    } else {
+      router.push("/learn/complete");
     }
   };
 
@@ -95,7 +106,7 @@ export default function WizardContent() {
             ) : (
               <span className="h-4 w-4 rounded-full border-2 border-green-400" />
             )}
-            {complete ? (currentStepIndex < totalSteps - 1 ? "Next step" : "Completed") : "Mark as complete"}
+            {complete ? "Next step" : "Mark as complete"}
           </button>
         </div>
       </div>
