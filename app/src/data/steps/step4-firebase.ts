@@ -31,10 +31,15 @@ export const step4Firebase: StepData = {
           content: "Go to the Firebase Console and create a new project:",
         },
         {
+          type: "link",
+          content: "https://console.firebase.google.com",
+          label: "Open Firebase Console",
+        },
+        {
           type: "checklist",
           content: "",
           items: [
-            "Go to console.firebase.google.com and sign in with your Google account",
+            "Sign in with your Google account",
             "Click \"Add project\" (or \"Create a project\")",
             "Give it a name (anything you want — e.g., \"my-training-app\")",
             "You can disable Google Analytics when prompted (not needed for this)",
@@ -55,12 +60,23 @@ export const step4Firebase: StepData = {
           type: "checklist",
           content: "",
           items: [
-            "In your Firebase project, click \"Build\" in the left sidebar, then \"Firestore Database\"",
+            "In the left sidebar, click \"Databases & Storage\", then select \"Firestore Database\"",
             "Click \"Create database\"",
-            "Choose \"Start in production mode\" — this locks the database down by default, which is the right habit to build from day one",
-            "Select a location closest to you (e.g., us-central1 for US)",
-            "Click \"Enable\"",
+            "Step 1 — Select edition: keep \"Standard edition\" selected and click \"Next\"",
+            "Step 2 — Database ID & location: leave the default ID and select a location closest to you (e.g., us-central1 for US)",
+            "Step 3 — Configure: choose \"Start in production mode\" — this locks the database down by default, which is the right habit to build from day one",
+            "Click \"Create\" to finish",
           ],
+        },
+        {
+          type: "text",
+          content:
+            "Once created, you should see your empty database ready to go:",
+        },
+        {
+          type: "image",
+          content: "/Screenshot 2026-04-03 064613.png",
+          label: "Your empty Firestore database",
         },
         {
           type: "callout",
@@ -82,7 +98,7 @@ export const step4Firebase: StepData = {
           type: "checklist",
           content: "",
           items: [
-            "Go to Project Settings (click the gear icon next to \"Project Overview\" in the sidebar)",
+            "In the left sidebar, click \"Settings\" to expand it, then click \"General\"",
             "Scroll down to \"Your apps\" section",
             "Click the web icon (</>) to add a web app",
             "Give it a nickname (e.g., \"My Web App\")",
@@ -93,20 +109,26 @@ export const step4Firebase: StepData = {
         {
           type: "text",
           content:
-            "Firebase will show you a code snippet with your config values. You need these specific values:",
+            "Firebase will show an \"Add Firebase SDK\" screen. You don't need to run `npm install firebase` — it's already installed in this project. Look for the `firebaseConfig` object in the code snippet — that's what we need. It will look something like this:",
         },
         {
           type: "code",
           language: "javascript",
-          label: "Firebase will show something like this",
+          label: "Find these values in the code snippet",
           content: `const firebaseConfig = {
   apiKey: "AIza...",
   authDomain: "your-project.firebaseapp.com",
   projectId: "your-project",
-  storageBucket: "your-project.appspot.com",
+  storageBucket: "your-project.firebasestorage.app",
   messagingSenderId: "123456789",
   appId: "1:123456789:web:abc123"
 };`,
+        },
+        {
+          type: "callout",
+          variant: "info",
+          content:
+            "Keep this screen open — you'll copy each value directly into your `.env.local` file in the next step.",
         },
       ],
     },
@@ -135,6 +157,11 @@ NEXT_PUBLIC_FIREBASE_APP_ID=1:123456789:web:abc123`,
           content:
             "These NEXT_PUBLIC_ variables are safe to expose in the browser — they identify your project but don't grant admin access. The real security comes from Firebase Security Rules and your server-side service account.",
         },
+        {
+          type: "text",
+          content:
+            "Once you've copied all the values, go back to the Firebase tab and click \"Continue to console\" to finish registering your app.",
+        },
       ],
     },
     {
@@ -149,7 +176,7 @@ NEXT_PUBLIC_FIREBASE_APP_ID=1:123456789:web:abc123`,
           type: "checklist",
           content: "",
           items: [
-            "Go to Project Settings (gear icon) > \"Service accounts\" tab",
+            "In the left sidebar, click \"Settings\" to expand it, then click \"Service accounts\"",
             "Make sure \"Firebase Admin SDK\" is selected and language is \"Node.js\"",
             "Click \"Generate new private key\"",
             "Click \"Generate key\" in the confirmation dialog",

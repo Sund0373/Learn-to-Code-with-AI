@@ -18,28 +18,32 @@ interface UseAuthReturn {
 
 /**
  * Hook to access the current authenticated user.
- * Cookie is the source of truth (server-side via middleware).
- * This hook provides client-side display info only.
- * Fully inert when Firebase is not configured.
+ * Uses Firebase onAuthStateChanged as the primary source of truth,
+ * with sessionStorage as a fallback hint.
  */
 export function useAuth(): UseAuthReturn {
   const [user, setUser] = useState<AuthUser | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [authStatus, setAuthStatus] = useState<AuthStatus>({ state: "anonymous" });
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
     const status = checkAuthState();
-    setAuthStatus(status);
 
     if (isFirebaseConfigured()) {
       const auth = getClientAuth();
       if (auth) {
         import("firebase/auth").then(({ onAuthStateChanged }) => {
           onAuthStateChanged(auth, (firebaseUser) => {
-            if (firebaseUser && status.state === "authenticated") {
+            if (firebaseUser) {
               setUser({ uid: firebaseUser.uid, email: firebaseUser.email });
+              setIsAuthenticated(true);
             } else if (status.state === "authenticated" && status.userId) {
+              // Firebase hasn't loaded yet but sessionStorage says logged in
               setUser({ uid: status.userId, email: null });
+              setIsAuthenticated(true);
+            } else {
+              setUser(null);
+              setIsAuthenticated(false);
             }
             setIsLoading(false);
           });
@@ -50,16 +54,18 @@ export function useAuth(): UseAuthReturn {
       }
     }
 
+    // No Firebase — fall back to sessionStorage only
     if (status.state === "authenticated" && status.userId) {
       setUser({ uid: status.userId, email: null });
+      setIsAuthenticated(true);
     }
     setIsLoading(false);
   }, []);
 
   return {
     user,
-    authStatus,
+    authStatus: isAuthenticated ? { state: "authenticated", userId: user?.uid } : { state: "anonymous" },
     isLoading,
-    isAuthenticated: authStatus.state === "authenticated",
+    isAuthenticated,
   };
 }
