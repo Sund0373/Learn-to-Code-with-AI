@@ -29,11 +29,27 @@ export const step7Scraping: StepData = {
         {
           type: "text",
           content:
-            "The scraper uses Python. Make sure you have it installed by running `python --version` in your terminal (3.10+ is ideal). If not, download it from python.org — check \"Add Python to PATH\" during installation.",
+            "The scraper uses Python. Open a new terminal in VS Code (click the + button) and check if Python is installed:",
+        },
+        {
+          type: "terminal",
+          content: "python --version",
+          label: "Check Python version (3.10+ is ideal)",
         },
         {
           type: "text",
-          content: "Then install the scraping packages and browser:",
+          content:
+            "If you see a version number, you're good. If not, ask your AI agent:",
+        },
+        {
+          type: "code",
+          language: "text",
+          label: "Tell your AI agent",
+          content: "I don't have Python installed. Help me install it on Windows and make sure it's added to PATH.",
+        },
+        {
+          type: "text",
+          content: "Once Python is ready, install the scraping packages and browser in the same terminal:",
         },
         {
           type: "terminal",

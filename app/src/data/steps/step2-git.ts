@@ -24,6 +24,32 @@ export const step2Git: StepData = {
       ],
     },
     {
+      title: "Open a Second Terminal",
+      blocks: [
+        {
+          type: "text",
+          content:
+            "Your dev server is running in one terminal — leave it running! You can open a second terminal for Git commands. In VS Code, click the `+` button in the terminal panel to open a new one.",
+        },
+        {
+          type: "text",
+          content:
+            "In your new terminal, navigate to the project root — Git commands need to run from the folder that contains the `.git` directory:",
+        },
+        {
+          type: "terminal",
+          content: "cd ..",
+          label: "Navigate to the project root (if you're in app/)",
+        },
+        {
+          type: "callout",
+          variant: "tip",
+          content:
+            "You can have as many terminals open as you want. Keep one for the dev server and use others for running commands. You'll use this pattern constantly.",
+        },
+      ],
+    },
+    {
       title: "Create a Branch",
       blocks: [
         {
@@ -33,7 +59,7 @@ export const step2Git: StepData = {
         },
         {
           type: "text",
-          content: "Open your terminal (in VS Code, press Ctrl+` or go to Terminal > New Terminal) and run:",
+          content: "In your second terminal, run:",
         },
         {
           type: "terminal",
@@ -44,6 +70,16 @@ export const step2Git: StepData = {
           type: "text",
           content:
             "This creates a new branch called `my-first-branch` and switches you to it. You can name branches whatever you want — just keep them lowercase with dashes.",
+        },
+        {
+          type: "text",
+          content:
+            "Look at the bottom-left corner of VS Code — you should see the branch name changed from `main` to `my-first-branch`. This is how you can always tell which branch you're on.",
+        },
+        {
+          type: "image",
+          content: "/branch-indicator.png",
+          label: "The branch name in the VS Code status bar",
         },
       ],
     },
@@ -67,7 +103,20 @@ export const step2Git: StepData = {
         {
           type: "text",
           content:
-            "You should see the file you changed listed in red under \"Changes not staged for commit.\" This means Git knows the file changed but you haven't told it to save the change yet.",
+            "You should see something like this — files you changed listed in red under \"Changes not staged for commit.\" This means Git knows the files changed but you haven't told it to save them yet.",
+        },
+        {
+          type: "image",
+          content: "/git-status-example.png",
+          label: "Example output of git status",
+        },
+        {
+          type: "checklist",
+          content: "",
+          items: [
+            "\"Changes not staged for commit\" (red) — Files that existed before and have been modified. Git sees the changes but won't save them until you stage them.",
+            "\"Untracked files\" (red) — Brand new files that Git has never seen before. You need to add them before Git will track them.",
+          ],
         },
       ],
     },
@@ -100,6 +149,21 @@ export const step2Git: StepData = {
           content:
             "The `-u origin` part is only needed the first time you push a new branch. After that, just `git push` is enough.",
         },
+        {
+          type: "text",
+          content:
+            "Here's what the full process looks like in your terminal:",
+        },
+        {
+          type: "image",
+          content: "/Screenshot 2026-04-03 062541.png",
+          label: "Running git add, commit, and push in the terminal",
+        },
+        {
+          type: "text",
+          content:
+            "Notice the output after `git commit` — it tells you the branch name, how many files changed, and how many lines were added or removed. The `create mode` lines mean Git is tracking brand new files for the first time.",
+        },
       ],
     },
     {
@@ -108,7 +172,12 @@ export const step2Git: StepData = {
         {
           type: "text",
           content:
-            "Go to your repository on GitHub.com. You should see a banner saying your branch was recently pushed, with an option to create a \"Pull Request.\" A Pull Request (PR) is how you propose merging your changes into the main branch.",
+            "Go to your repository on GitHub.com. To see your new branch, click the branch dropdown (it usually says `main`) near the top-left of the page. You should see `my-first-branch` in the list.",
+        },
+        {
+          type: "text",
+          content:
+            "You may also see a yellow banner at the top saying your branch was recently pushed, with a green \"Compare & pull request\" button. A Pull Request (PR) is how you propose merging your changes into the main branch.",
         },
         {
           type: "callout",

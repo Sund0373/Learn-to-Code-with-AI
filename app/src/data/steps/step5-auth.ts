@@ -31,7 +31,7 @@ export const step5Auth: StepData = {
           items: [
             "Go to your Firebase Console (console.firebase.google.com)",
             "Select your project",
-            "Click \"Build\" in the left sidebar, then \"Authentication\"",
+            "In the left sidebar, click \"Security\" to expand it, then click \"Authentication\"",
             "Click \"Get started\" (if this is your first time)",
             "Click on the \"Sign-in method\" tab",
             "Click \"Email/Password\"",
@@ -90,7 +90,7 @@ export const step5Auth: StepData = {
         {
           type: "text",
           content:
-            "Click \"Log out\" in the top-right corner of the header. Then click below to go to the login page and sign in with the same credentials:",
+            "Click your email address in the top-right corner of the header to open the account menu, then click \"Log out.\" You'll be redirected to the sign in page. Sign in with the same credentials you just created:",
         },
         {
           type: "link",

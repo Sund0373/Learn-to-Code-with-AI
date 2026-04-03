@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useAuth } from "@/hooks/useAuth";
 import { clearAllAuthData } from "@/lib/auth/authService";
+import { isFirebaseConfigured, getClientAuth } from "@/lib/firebase/client";
 import AiChat from "./AiChat";
 
 interface AiStatus {
@@ -29,19 +30,27 @@ export default function Header() {
   const router = useRouter();
   const { user, isAuthenticated, isLoading } = useAuth();
   const [chatOpen, setChatOpen] = useState(false);
+  const [accountOpen, setAccountOpen] = useState(false);
   const aiStatus = useAiStatus();
 
   const handleLogout = async () => {
     await fetch("/api/auth/logout", { method: "POST" });
     clearAllAuthData();
-    router.replace("/");
+    if (isFirebaseConfigured()) {
+      const auth = getClientAuth();
+      if (auth) {
+        const { signOut } = await import("firebase/auth");
+        await signOut(auth);
+      }
+    }
+    router.replace("/auth");
   };
 
   const hasAi = aiStatus?.anthropic || aiStatus?.openai;
 
   return (
     <>
-      <header className="border-b border-gray-200 bg-white overflow-hidden">
+      <header className="relative z-50 border-b border-gray-200 bg-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between gap-4">
             <Link
@@ -84,18 +93,39 @@ export default function Header() {
               )}
 
               {/* Auth state */}
-              {!isLoading && isAuthenticated && user && (
-                <>
-                  <span className="text-sm text-gray-600">
-                    Hello, {user.email}
-                  </span>
+              {!isLoading && isAuthenticated && (
+                <div className="relative">
                   <button
-                    onClick={handleLogout}
-                    className="rounded-lg border border-gray-300 px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50"
+                    onClick={() => setAccountOpen((prev) => !prev)}
+                    className="rounded-lg border border-gray-200 px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
                   >
-                    Log out
+                    {user?.email || "Account"}
                   </button>
-                </>
+                  {accountOpen && (
+                    <>
+                      <div
+                        className="fixed inset-0 z-40"
+                        onClick={() => setAccountOpen(false)}
+                      />
+                      <div className="absolute right-0 z-50 mt-1 w-48 rounded-lg border border-gray-200 bg-white py-1 shadow-lg">
+                        {user?.email && (
+                          <div className="px-3 py-2 text-xs text-gray-500 border-b border-gray-100 truncate">
+                            {user.email}
+                          </div>
+                        )}
+                        <button
+                          onClick={() => {
+                            setAccountOpen(false);
+                            handleLogout();
+                          }}
+                          className="w-full px-3 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                        >
+                          Log out
+                        </button>
+                      </div>
+                    </>
+                  )}
+                </div>
               )}
 
               {/* Tutorial */}

@@ -86,20 +86,20 @@ export const step7Products: StepData = {
           type: "code",
           language: "text",
           label: "Ideas to try with your AI agent",
-          content: `Try any of these:
+          content: `Try any of these (the products page is at app/src/app/products/page.tsx):
 
-1. "Add a price range filter (min/max) to the products page"
+1. "Add a price range filter (min/max) to the products page at app/src/app/products/page.tsx"
 
-2. "Add a detail view — when I click a product row, show a
+2. "Add a detail view to the products page — when I click a product row, show a
     modal or side panel with all the product info"
 
-3. "Add an 'Add Product' button that opens a form to create
+3. "Add an 'Add Product' button to the products page that opens a form to create
     a new product via POST /api/products"
 
-4. "Add a 'Delete' button to each row that removes the
+4. "Add a 'Delete' button to each row on the products page that removes the
     product from the database"
 
-5. "Show a summary bar above the table with total products,
+5. "Show a summary bar above the table on the products page with total products,
     average price, and total stock value"`,
         },
         {

@@ -42,7 +42,7 @@ export default function CodeBlock({ code, language, label }: CodeBlockProps) {
           </button>
         </div>
       )}
-      <pre className="overflow-x-auto p-4">
+      <pre className="whitespace-pre-wrap break-words p-4">
         <code className="text-sm leading-relaxed text-gray-100">{code}</code>
       </pre>
     </div>
