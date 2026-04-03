@@ -110,25 +110,34 @@ export const step1Welcome: StepData = {
         {
           type: "text",
           content:
-            "Let's prove that hot reload works. Ask your AI coding agent:",
+            "Let's prove that hot reload works. See the heading below?",
+        },
+        {
+          type: "component",
+          content: "HelloWorldDemo",
+        },
+        {
+          type: "text",
+          content:
+            "Ask your AI coding agent to change it:",
         },
         {
           type: "code",
           language: "text",
           label: "Tell your AI agent",
           content:
-            "Change the heading on the home page (app/src/app/page.tsx) from \"Hello, World\" to \"Hello, [your name]\"",
+            "Change the \"Hello, World\" heading on Step 1 to say \"Hello, [your name]\"",
         },
         {
           type: "text",
           content:
-            "Watch your browser — the page should update instantly without a manual refresh. That's hot reload in action!",
+            "Watch the heading above — it should update instantly without a manual refresh. That's hot reload in action!",
         },
         {
           type: "callout",
           variant: "success",
           content:
-            "If you saw the page update, everything is working. Your agent can make changes to ANY file in the project and you'll see the result immediately.",
+            "If you saw the heading change, everything is working. Your agent can make changes to ANY file in the project and you'll see the result immediately.",
         },
       ],
     },

@@ -24,6 +24,31 @@ export const step2Git: StepData = {
       ],
     },
     {
+      title: "Stop Your Dev Server",
+      blocks: [
+        {
+          type: "text",
+          content:
+            "Before creating a branch, stop the development server that's running in your terminal. Click on the terminal where you ran `npm run dev` and press:",
+        },
+        {
+          type: "terminal",
+          content: "Ctrl + C",
+          label: "Stop the dev server",
+        },
+        {
+          type: "text",
+          content:
+            "You should see the terminal return to a normal prompt. Don't worry — you'll start it again later. Now navigate to the project root — Git commands need to run from the folder that contains the `.git` directory:",
+        },
+        {
+          type: "terminal",
+          content: "cd ..",
+          label: "Navigate to the project root",
+        },
+      ],
+    },
+    {
       title: "Create a Branch",
       blocks: [
         {
@@ -33,7 +58,7 @@ export const step2Git: StepData = {
         },
         {
           type: "text",
-          content: "Open your terminal (in VS Code, press Ctrl+` or go to Terminal > New Terminal) and run:",
+          content: "In the same terminal, run:",
         },
         {
           type: "terminal",
@@ -44,6 +69,16 @@ export const step2Git: StepData = {
           type: "text",
           content:
             "This creates a new branch called `my-first-branch` and switches you to it. You can name branches whatever you want — just keep them lowercase with dashes.",
+        },
+        {
+          type: "text",
+          content:
+            "Look at the bottom-left corner of VS Code — you should see the branch name changed from `main` to `my-first-branch`. This is how you can always tell which branch you're on.",
+        },
+        {
+          type: "image",
+          content: "/branch-indicator.png",
+          label: "The branch name in the VS Code status bar",
         },
       ],
     },
@@ -67,7 +102,20 @@ export const step2Git: StepData = {
         {
           type: "text",
           content:
-            "You should see the file you changed listed in red under \"Changes not staged for commit.\" This means Git knows the file changed but you haven't told it to save the change yet.",
+            "You should see something like this — files you changed listed in red under \"Changes not staged for commit.\" This means Git knows the files changed but you haven't told it to save them yet.",
+        },
+        {
+          type: "image",
+          content: "/git-status-example.png",
+          label: "Example output of git status",
+        },
+        {
+          type: "checklist",
+          content: "",
+          items: [
+            "\"Changes not staged for commit\" (red) — Files that existed before and have been modified. Git sees the changes but won't save them until you stage them.",
+            "\"Untracked files\" (red) — Brand new files that Git has never seen before. You need to add them before Git will track them.",
+          ],
         },
       ],
     },
