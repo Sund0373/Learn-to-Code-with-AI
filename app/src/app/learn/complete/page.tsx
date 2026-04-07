@@ -29,7 +29,7 @@ function generateDiploma(canvas: HTMLCanvasElement, name: string) {
   ctx.fillStyle = "#1E3A5F";
   ctx.font = "bold 44px Georgia, serif";
   ctx.textAlign = "center";
-  ctx.fillText("FBLV AI Innovator Award", w / 2, 150);
+  ctx.fillText("Certificate of Completion", w / 2, 150);
 
   // Divider
   ctx.strokeStyle = "#2563EB";
@@ -129,7 +129,7 @@ export default function CompletionPage() {
   const handleDownload = () => {
     if (!canvasRef.current) return;
     const link = document.createElement("a");
-    link.download = "FBLV-AI-Innovator-Award.png";
+    link.download = "Certificate-of-Completion.png";
     link.href = canvasRef.current.toDataURL("image/png");
     link.click();
   };
@@ -187,7 +187,7 @@ export default function CompletionPage() {
         {/* Diploma generator */}
         <div className="mt-10 rounded-xl border border-gray-200 bg-white p-8">
           <h2 className="text-xl font-semibold text-gray-900 mb-4">
-            Your FBLV AI Innovator Award
+            Your Certificate of Completion
           </h2>
 
           {!generated ? (
@@ -207,7 +207,7 @@ export default function CompletionPage() {
                   onClick={handleGenerate}
                   className="rounded-lg bg-action-primary px-6 py-2.5 text-sm font-semibold text-white hover:bg-action-primary-hover transition-colors"
                 >
-                  Generate Diploma
+                  Generate Certificate
                 </button>
               </div>
             </div>
@@ -222,7 +222,7 @@ export default function CompletionPage() {
                   onClick={handleDownload}
                   className="rounded-lg bg-action-primary px-6 py-2.5 text-sm font-semibold text-white hover:bg-action-primary-hover transition-colors"
                 >
-                  Download Diploma
+                  Download Certificate
                 </button>
                 <button
                   onClick={() => setGenerated(false)}
