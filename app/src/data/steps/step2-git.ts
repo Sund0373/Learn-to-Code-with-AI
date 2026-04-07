@@ -19,7 +19,7 @@ export const step2Git: StepData = {
           type: "callout",
           variant: "tip",
           content:
-            "You already used Git when you cloned this repo. Now you'll learn the day-to-day commands you'll use constantly.",
+            "Your coding agent already used Git behind the scenes when it cloned this repo for you. Now you'll learn the day-to-day commands you'll use yourself.",
         },
       ],
     },
@@ -84,16 +84,24 @@ export const step2Git: StepData = {
       ],
     },
     {
-      title: "Make a Change",
+      title: "Make a Small UI Change",
       blocks: [
         {
           type: "text",
           content:
-            "Now make any small change to a file. For example, open `app/src/app/page.tsx` and change the heading text to something fun. Save the file.",
+            "Let's give Git something to track. We're going to update the button text on your home page from \"Start the Tutorial\" to something that feels more like yours. Ask your AI agent:",
+        },
+        {
+          type: "code",
+          language: "text",
+          label: "Tell your AI agent",
+          content:
+            "On the home page (app/src/app/page.tsx), change the button text from \"Start the Tutorial\" to \"Let's Build Something\" (or any text you prefer).",
         },
         {
           type: "text",
-          content: "Now check what Git sees:",
+          content:
+            "Once your agent makes the change, switch back to your browser at http://localhost:3000 — you should see the new button text appear instantly thanks to hot reload. Now check what Git sees:",
         },
         {
           type: "terminal",
@@ -163,6 +171,12 @@ export const step2Git: StepData = {
           type: "text",
           content:
             "Notice the output after `git commit` — it tells you the branch name, how many files changed, and how many lines were added or removed. The `create mode` lines mean Git is tracking brand new files for the first time.",
+        },
+        {
+          type: "callout",
+          variant: "tip",
+          content:
+            "**First time pushing?** A browser window may pop up asking you to authorize Git to access GitHub — click \"Authorize\" and you're set. Mac users who already ran `gh auth login` during setup won't see this popup since auth is already configured.",
         },
       ],
     },

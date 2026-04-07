@@ -2,17 +2,28 @@
 
 A full-stack training template with an interactive step-by-step wizard. Students clone the repo, install dependencies, run the dev server, and the app walks them through everything else.
 
-## Quick Start
+## Workshop Setup
 
-```bash
-git clone https://github.com/YOUR_USERNAME/Learn-to-Code-with-AI.git
-cd Learn-to-Code-with-AI/app
-npm install
-cp .env.example .env.local
-npm run dev
+**👉 Start here:** [Learn to Code with AI — Workshop Slides](https://drive.google.com/file/d/17qJpTNd6JUvS9aQoOJRa7EsXMt8K0tIJ/view?usp=sharing)
+
+The slides walk you through everything before this README picks up: installing VS Code, setting up a coding agent, creating a GitHub account, installing Node.js and Git (including `gh` CLI for Mac users), using "Use this template" to make your own copy of this repo, and starting the dev server.
+
+Once you've completed the slides, the in-app tutorial wizard takes over at [http://localhost:3000/learn](http://localhost:3000/learn).
+
+## Quick Reference
+
+After completing the workshop slides, your dev server should be running. The interactive tutorial starts at:
+
+```
+http://localhost:3000/learn
 ```
 
-Open [http://localhost:3000/learn](http://localhost:3000/learn) to start the tutorial.
+If you ever need to restart the dev server:
+
+```bash
+cd First-Project/app
+npm run dev
+```
 
 ## What's Inside
 
@@ -59,14 +70,15 @@ Open [http://localhost:3000/learn](http://localhost:3000/learn) to start the tut
 
 ## For Instructors
 
-This repo is designed as a **GitHub Template Repository**. Students click "Use this template" to get their own copy they can freely push to.
+This repo is designed as a **GitHub Template Repository**. Students click "Use this template" to get their own copy they can freely push to. The full pre-wizard setup is covered in the [workshop slides](https://drive.google.com/file/d/17qJpTNd6JUvS9aQoOJRa7EsXMt8K0tIJ/view?usp=sharing).
 
 The tutorial assumes students have:
 - A GitHub account
-- VS Code with an AI coding agent (Claude Code, Copilot, etc.)
-- Node.js installed
+- VS Code with an AI coding agent (Codex, Claude Code, or GitHub Copilot)
+- Node.js and Git installed
+- **Mac users:** GitHub CLI (`gh`) installed and authenticated via `gh auth login` — this prevents the terminal password prompt issue when pushing to GitHub
 
-The wizard picks up after `npm run dev` — slides or in-person instruction covers everything before that point.
+The wizard picks up after `npm run dev` — the slides cover everything before that point.
 
 ## Project Structure
 
