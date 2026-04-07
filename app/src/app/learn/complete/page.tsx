@@ -235,6 +235,90 @@ export default function CompletionPage() {
           )}
         </div>
 
+        {/* Keep going with your education */}
+        <div className="mt-10 rounded-xl border border-gray-200 bg-white p-8 text-left">
+          <h2 className="text-xl font-semibold text-gray-900 mb-2 text-center">
+            Keep Going With Your Education
+          </h2>
+          <p className="mt-2 text-sm text-gray-500 text-center">
+            You have a working full-stack app. Here&apos;s how to make it your own
+            and start building real projects.
+          </p>
+
+          <div className="mt-6 rounded-lg border border-amber-200 bg-amber-50 p-4">
+            <h3 className="text-sm font-semibold text-amber-900">
+              Turn this project into your personal base template
+            </h3>
+            <p className="mt-2 text-sm text-amber-800">
+              We&apos;ve written a recommended path for converting this project
+              into a private GitHub template you can re-use for every future
+              build. It&apos;s in <code className="rounded bg-amber-100 px-1 py-0.5 font-mono text-xs">BASE_TEMPLATE.md</code>{" "}
+              at the project root, written for your AI agent.
+            </p>
+            <p className="mt-2 text-sm text-amber-800">
+              To start the conversion, give your agent this prompt:
+            </p>
+            <pre className="mt-2 overflow-x-auto rounded-md bg-amber-100 p-3 text-xs text-amber-900">
+{`Read BASE_TEMPLATE.md at the project root and walk me through
+converting this project into my personal base template. Pause
+and ask me about the negotiation points — I want to make those
+decisions myself.`}
+            </pre>
+            <p className="mt-2 text-xs text-amber-700">
+              ⚠️ Your <code className="rounded bg-amber-100 px-1 py-0.5 font-mono">.env.local</code>{" "}
+              and credentials stay intact for this project — but future
+              projects spun up from your template need fresh ones.
+            </p>
+          </div>
+
+          <h3 className="mt-6 text-sm font-semibold text-gray-900">
+            Next steps to explore
+          </h3>
+          <ul className="mt-3 space-y-2 text-sm text-gray-600">
+            <li className="flex items-start gap-2">
+              <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-blue-100 text-blue-700 text-xs font-semibold">1</span>
+              <span>
+                <strong className="text-gray-900">Start a new project with your template</strong> — Click
+                &quot;Use this template&quot; on your private template repo and
+                create a new private repo for your real project.
+              </span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-blue-100 text-blue-700 text-xs font-semibold">2</span>
+              <span>
+                <strong className="text-gray-900">Personalize your Agent Instructions</strong> — Create a{" "}
+                <code className="rounded bg-gray-100 px-1 py-0.5 font-mono text-xs">CLAUDE.md</code>{" "}
+                (or <code className="rounded bg-gray-100 px-1 py-0.5 font-mono text-xs">AGENTS.md</code>)
+                capturing how you like to work. It carries forward into every
+                future project.
+              </span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-blue-100 text-blue-700 text-xs font-semibold">3</span>
+              <span>
+                <strong className="text-gray-900">Add to / update your template as you build</strong> —
+                When you build something reusable in a real project, copy it
+                back to your template. Your template should grow with you.
+              </span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-blue-100 text-blue-700 text-xs font-semibold">4</span>
+              <span>
+                <strong className="text-gray-900">Connect to a web hosting service — we recommend Vercel</strong> —
+                Vercel + GitHub gives you push-to-deploy on a generous free tier.
+              </span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-blue-100 text-blue-700 text-xs font-semibold">5</span>
+              <span>
+                <strong className="text-gray-900">Explore GitHub Actions</strong> — Automated tests,
+                scheduled scrapers, deployment automation. The frontier for
+                when you&apos;re ready.
+              </span>
+            </li>
+          </ul>
+        </div>
+
         <div className="mt-10">
           <Link
             href="/learn"
